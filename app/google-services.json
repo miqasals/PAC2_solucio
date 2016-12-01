@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "436825032772",
+    "firebase_url": "https://android2uoc.firebaseio.com",
+    "project_id": "android2uoc",
+    "storage_bucket": "android2uoc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436825032772:android:46fedc06cc5f5e0d",
+        "android_client_info": {
+          "package_name": "uoc.miquel.pac3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "436825032772-uvs2npl9ctindjfpa5s0enc2hhb7kt0h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOUj5XKysgkA1LwohzcWm4zdkBhLLzZAY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
