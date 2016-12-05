@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PAC3</string>
+    <string name="title_book_detail">Book Detail</string>
+    <string name="auth_failed">Error connectando con Firebase</string>
+</resources>

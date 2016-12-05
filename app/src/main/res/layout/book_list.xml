@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<android.support.v7.widget.RecyclerView
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/book_list"
+    android:name="edu.uoc.pac1.BookListFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    tools:context="uoc.miquel.pac3.BookListActivity"
+    tools:listitem="@layout/book_list_content" />
+</android.support.v4.widget.SwipeRefreshLayout>
