@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -77,7 +76,6 @@ public class BookListActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
                         if (task.isSuccessful()) {
                             downloadBooks();
                         } else {
@@ -261,26 +259,6 @@ public class BookListActivity extends AppCompatActivity {
 
 
     public void viewBook(int position) {
-        /*
-        if ( mTwoPane ) {
-            BookDetailFragment bookDetailFragment = new BookDetailFragment();
-            Bundle posArg = new Bundle();
-            posArg.putInt("position",position);
-            bookDetailFragment.setArguments(posArg);
-
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction()
-                    .replace(R.id.book_detail,bookDetailFragment)
-                    .commit();
-
-        } else {
-            Intent intent = new Intent(this, BookDetailActivity.class);
-            intent.putExtra("position", position);
-            this.startActivity(intent);
-        }
-        */
-
-
         if (mTwoPane) {
             Bundle arguments = new Bundle();
             arguments.putInt(BookDetailFragment.ARG_ITEM_ID, position);
@@ -300,7 +278,7 @@ public class BookListActivity extends AppCompatActivity {
     public void removeBook (int position) {
         BookContent.BookItem book = BookContent.getBooks().get(position);
         book.delete();
-        Toast.makeText(this,book.getTitle() + "ELIMINADO", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,book.getTitle() + " ELIMINADO", Toast.LENGTH_SHORT).show();
         adapter.setItems(BookContent.getBooks());
     }
 

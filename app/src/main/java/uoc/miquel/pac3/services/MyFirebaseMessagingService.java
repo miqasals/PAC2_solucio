@@ -9,15 +9,12 @@ import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-import uoc.miquel.pac3.BookDetailActivity;
 import uoc.miquel.pac3.BookListActivity;
 import uoc.miquel.pac3.R;
 import uoc.miquel.pac3.model.BookContent;
@@ -85,24 +82,24 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         //Es crea el builder de la notificació.
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 //Configurem la icona de la barra d'estat
-                .setSmallIcon(R.drawable.ic_new_releases_black_24dp)
+                .setSmallIcon(R.drawable.ic_import_contacts_black_24dp)
                 //Titol de la notificacio visible quan esta extesa.
                 .setContentTitle("Notificació Firebase")
                 //Text de la notificacio visible quan esta extesa.
                 .setContentText(BookContent.getBooks().get(position).getTitle())
                 //Indiquem a la notificació que es pot tancar despres de presionar-la
-                .setAutoCancel(true)
+                //.setAutoCancel(true)
                 //Asigna el so que hem creat anteriorment.
                 .setSound(defaultSoundUri)
+                // Set the vibration of the device to two vibrations of one second.
+                .setVibrate(new long[] { 1000, 1000 })
+                // Set the led light in blue when receive a notification.
+                .setLights(Color.BLUE,3000,3000)
 
-                .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
-
-                .setLights(Color.WHITE,3,3)
-
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(BookContent.getBooks().get(position).getTitle() + "\n" + messageBody))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(BookContent.getBooks().get(position).getTitle()))
                 .addAction(new NotificationCompat.Action(R.drawable.ic_delete_black_24dp,"Eliminar",piErase))
                 .addAction(new NotificationCompat.Action(R.drawable.ic_search_black_24dp,"Veure",piDetail))
-                //.setContentIntent(piMain)
+                .setContentIntent(piMain)
                 ;
         ////////////////////////////////////////////////////
 

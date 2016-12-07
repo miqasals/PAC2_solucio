@@ -3,6 +3,13 @@
     package="uoc.miquel.pac3">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- Firebase Notifications permissions
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="uoc.miquel.pac3.uocpac1app.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="uoc.miquel.pac3.uocpac1app.permission.C2D_MESSAGE"
+        android:protectionLevel="signature"/> -->
 
 
     <application
