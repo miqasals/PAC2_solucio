@@ -117,7 +117,7 @@ public class BookListActivity extends AppCompatActivity {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        // RecyclerView
+        // RecyclerView. Get the reference of the view objects and inflates the list
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.book_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -161,22 +161,16 @@ public class BookListActivity extends AppCompatActivity {
                     nm.cancel(CommonConstants.NOTIFICATION_ID);
                 }
             }
-        } else {    //FOR DEBUGING
-            if (!intent.hasExtra(CommonConstants.POSITION_KEY)) {
-                Toast.makeText(this, "Error de dades", Toast.LENGTH_SHORT).show();
-            }
-            if (intent.getAction() == null) {
-                Toast.makeText(this, "Error de action", Toast.LENGTH_SHORT).show();
-            }
-            if (intent == null) {
-                Toast.makeText(this, "Error de intent", Toast.LENGTH_SHORT).show();
-            }
+            // If the action is MAIN only will load the list.
         }
         
 
     }
 
-
+    /**
+     * Download the books from Firebase. Called once the application authenticates
+     * successfully in remote database.
+     */
     private void downloadBooks() {
         swipeContainer.setRefreshing(true);
 
@@ -224,12 +218,22 @@ public class BookListActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Get the books from the local database and refresh the list view.
+     */
     private void getBooksFromDB() {
         List<BookContent.BookItem> values = BookContent.getBooks();
         adapter.setItems(values);
         swipeContainer.setRefreshing(false);
     }
 
+    /**
+     * Parse the list of books received from Firebase, save them in the local database and
+     * refresh the list view. If the received data are not correct or unreadable the function
+     * get the books from local database and refresh the list.
+     *
+     * @param dataSnapshot Obtained from Firebase in onDataChange() function.
+     */
     private void getBooksFromDataSnapshot(DataSnapshot dataSnapshot) {
         // This method is called once with the initial value and again
         // whenever data at this location is updated.
@@ -237,6 +241,7 @@ public class BookListActivity extends AppCompatActivity {
                 new GenericTypeIndicator<ArrayList<BookContent.BookItem>>() {};
         ArrayList<BookContent.BookItem> values = dataSnapshot.getValue(genericTypeIndicator);
         if (values != null) {
+
             // Save data in database
             for (BookContent.BookItem bookItem : values) {
                 if (!BookContent.exists(bookItem)) {
@@ -244,20 +249,37 @@ public class BookListActivity extends AppCompatActivity {
                 }
             }
 
-            adapter.setItems(values);
+
+            /*
+            BookContent.BookItem.deleteAll(BookContent.BookItem.class);
+            for (BookContent.BookItem book : values) {
+                book.save();
+            }
+            */
+
+            adapter.setItems(BookContent.getBooks());
             swipeContainer.setRefreshing(false);
         } else {
             getBooksFromDB();
         }
     }
 
+    /**
+     * Configure the recycler view adapter and call the inflater method setAdapter().
+     * @param recyclerView View object reference
+     */
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         adapter = new SimpleItemRecyclerViewAdapter(new ArrayList<BookContent.BookItem>());
         recyclerView.setAdapter(adapter);
     }
 
 
-
+    /**
+     * Start the detail activity or replace the detail fragment depending if the display shows the detail fragment
+     * or not. Called when the user tap to the DETAIL button of the notification received or when the user tap
+     * over an element from the list.
+     * @param position Position in the list of the element to modify.
+     */
     public void viewBook(int position) {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
@@ -275,11 +297,27 @@ public class BookListActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Erase the referenced book from the local database. Called when the user tap to the DETAIL button of the
+     * notification received.
+     * @param position Position in the list of the element to modify.
+     */
     public void removeBook (int position) {
+
         BookContent.BookItem book = BookContent.getBooks().get(position);
         book.delete();
         Toast.makeText(this,book.getTitle() + " ELIMINADO", Toast.LENGTH_SHORT).show();
         adapter.setItems(BookContent.getBooks());
+
+        /*
+        ArrayList<BookContent.BookItem> books = (ArrayList<BookContent.BookItem>) BookContent.getBooks();
+        BookContent.BookItem.deleteAll(BookContent.BookItem.class);
+        books.remove(position);
+        for (BookContent.BookItem book : books) {
+            book.save();
+        }
+        adapter.setItems(books);
+        */
     }
 
 
@@ -341,6 +379,7 @@ public class BookListActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     int currentPos = (int) v.getTag();
+                    /*
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
                         arguments.putInt(BookDetailFragment.ARG_ITEM_ID, currentPos);
@@ -355,6 +394,8 @@ public class BookListActivity extends AppCompatActivity {
                         intent.putExtra(BookDetailFragment.ARG_ITEM_ID, currentPos);
                         context.startActivity(intent);
                     }
+                    */
+                    viewBook(currentPos);
                 }
             });
         }

@@ -1,7 +1,7 @@
 package uoc.miquel.pac3.model;
 
 /**
- * Constants storage class
+ * Constants storage class public for all the project classes.
  */
 
 public final class CommonConstants {

@@ -53,7 +53,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
         ///////////////// INTENTS  /////////////////////
-        // Creem un intent per quan vulguem veure el detall del llibre
+        //Create the intents launched when the user taps the notification
+        // Intent for the DETAIL button.
         Intent detailIntent = new Intent(this, BookListActivity.class);
         detailIntent.setAction(CommonConstants.ACTION_DETAIL);
         detailIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -61,27 +62,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent piDetail = PendingIntent.getActivity(this,(int) System.currentTimeMillis(),detailIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-        //Creem un intent per quan vulguem borrar el llibre de la based dades local.
+        // Intent for the ERASE button.
         Intent eraseIntent = new Intent(this, BookListActivity.class);
         eraseIntent.setAction(CommonConstants.ACTION_ERASE);
         eraseIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         eraseIntent.putExtra(CommonConstants.POSITION_KEY, position);
         PendingIntent piErase = PendingIntent.getActivity(this,(int) System.currentTimeMillis(), eraseIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
 
-        //Creem un intent que ens conduirà a l'aplicació en cas que es premi al missatge de l'aplicació.
-        //TODO: Mirar de crear una finestra d'actuació dins de l'aplicació per quan s'activi aquesta opció.
+        // Intent called when the user taps over the text of the notification instead the buttons
         Intent mainIntent = new Intent(this, BookListActivity.class);
         mainIntent.setAction(CommonConstants.ACTION_MAIN);
         PendingIntent piMain = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), mainIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
         ///////////////////////////////////////////////
 
-        //Es crea un so per la notificacio
+        // Sound configuration. We use the NOTIFICATION default tone.
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         /////////////////  NOTIFICATION BUILDER //////////
-        //Es crea el builder de la notificació.
+        // Creating the notification and setting the text, buttons and behaviour.
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                //Configurem la icona de la barra d'estat
+                // Notification main view icon
                 .setSmallIcon(R.drawable.ic_import_contacts_black_24dp)
                 //Titol de la notificacio visible quan esta extesa.
                 .setContentTitle("Notificació Firebase")
