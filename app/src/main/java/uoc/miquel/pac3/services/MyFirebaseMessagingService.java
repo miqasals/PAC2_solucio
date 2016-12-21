@@ -1,5 +1,6 @@
 package uoc.miquel.pac3.services;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
@@ -96,7 +97,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 // Set the led light in blue when receive a notification.
                 .setLights(Color.BLUE,3000,3000)
 
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(BookContent.getBooks().get(position).getTitle()))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(BookContent.getBooks().get(position).getTitle() + "\n" + messageBody))
                 .addAction(new NotificationCompat.Action(R.drawable.ic_delete_black_24dp,"Eliminar",piErase))
                 .addAction(new NotificationCompat.Action(R.drawable.ic_search_black_24dp,"Veure",piDetail))
                 .setContentIntent(piMain)

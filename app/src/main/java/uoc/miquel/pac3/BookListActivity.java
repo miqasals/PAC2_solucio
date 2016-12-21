@@ -161,7 +161,7 @@ public class BookListActivity extends AppCompatActivity {
                     nm.cancel(CommonConstants.NOTIFICATION_ID);
                 }
             }
-            // If the action is MAIN only will load the list.
+            // If the action is MAIN only will load the list normally.
         }
         
 
@@ -248,16 +248,7 @@ public class BookListActivity extends AppCompatActivity {
                     bookItem.save();
                 }
             }
-
-
-            /*
-            BookContent.BookItem.deleteAll(BookContent.BookItem.class);
-            for (BookContent.BookItem book : values) {
-                book.save();
-            }
-            */
-
-            adapter.setItems(BookContent.getBooks());
+            adapter.setItems(BookContent.getBooks());       //Changed to prevent the position error on clicking to the list elements.
             swipeContainer.setRefreshing(false);
         } else {
             getBooksFromDB();
@@ -308,16 +299,6 @@ public class BookListActivity extends AppCompatActivity {
         book.delete();
         Toast.makeText(this,book.getTitle() + " ELIMINADO", Toast.LENGTH_SHORT).show();
         adapter.setItems(BookContent.getBooks());
-
-        /*
-        ArrayList<BookContent.BookItem> books = (ArrayList<BookContent.BookItem>) BookContent.getBooks();
-        BookContent.BookItem.deleteAll(BookContent.BookItem.class);
-        books.remove(position);
-        for (BookContent.BookItem book : books) {
-            book.save();
-        }
-        adapter.setItems(books);
-        */
     }
 
 

@@ -10,6 +10,6 @@ public class MyApplication extends SugarApp {
 
     public void onCreate() {
         super.onCreate();
-        Stetho.initializeWithDefaults(this);
+        Stetho.initializeWithDefaults(this)
     }
 }
